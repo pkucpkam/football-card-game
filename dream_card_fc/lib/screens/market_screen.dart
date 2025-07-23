@@ -13,7 +13,7 @@ class MarketScreen extends StatelessWidget {
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.deepPurple.shade100, Colors.white],
+              colors: [Colors.black, Colors.deepPurple.shade900],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -26,29 +26,71 @@ class MarketScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: Text(
                     '🛒 Thị Trường Cầu Thủ',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Colors.deepPurple.shade900,
+                    style: TextStyle(
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
+                      color: Colors.cyanAccent,
+                      fontFamily: 'Orbitron',
+                      shadows: [
+                        Shadow(
+                          color: Colors.cyanAccent.withOpacity(0.5),
+                          blurRadius: 8,
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: TabBar(
-                    labelColor: Colors.deepPurple.shade900,
-                    unselectedLabelColor: Colors.grey,
-                    indicatorColor: Colors.deepPurple.shade700,
-                    tabs: const [
-                      Tab(text: 'Search'),
-                      Tab(text: 'Hot Player'),
-                      Tab(text: 'Your Player'),
+                  child: GlassContainer(
+                    height: 50,
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.deepPurple.withOpacity(0.3),
+                        Colors.black.withOpacity(0.3),
+                      ],
+                    ),
+                    borderGradient: LinearGradient(
+                      colors: [
+                        Colors.cyanAccent.withOpacity(0.8),
+                        Colors.pinkAccent.withOpacity(0.8),
+                      ],
+                    ),
+                    blur: 12,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.cyanAccent.withOpacity(0.3),
+                        blurRadius: 10,
+                        spreadRadius: 2,
+                      ),
                     ],
+                    child: TabBar(
+                      labelColor: Colors.cyanAccent,
+                      unselectedLabelColor: Colors.white70,
+                      indicatorColor: Colors.cyanAccent,
+                      labelStyle: const TextStyle(
+                        fontFamily: 'Orbitron',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                      unselectedLabelStyle: const TextStyle(
+                        fontFamily: 'Roboto Condensed',
+                        fontSize: 14,
+                      ),
+                      tabs: const [
+                        Tab(text: 'Search'),
+                        Tab(text: 'Hot Player'),
+                        Tab(text: 'Your Player'),
+                      ],
+                    ),
                   ),
                 ),
+                const SizedBox(height: 16),
                 Expanded(
                   child: TabBarView(
                     children: [
-                      _buildPlayerList(context, searchPlayers),
+                      _buildSearchTab(context),
                       _buildPlayerList(context, hotPlayers),
                       _buildPlayerList(context, yourPlayers),
                     ],
@@ -66,10 +108,10 @@ class MarketScreen extends StatelessWidget {
   Widget _buildBottomNavigationBar(BuildContext context, int currentIndex) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      selectedItemColor: Colors.deepPurple,
-      unselectedItemColor: Colors.grey,
-      backgroundColor: Colors.white.withOpacity(0.9),
-      elevation: 8,
+      selectedItemColor: Colors.cyanAccent,
+      unselectedItemColor: Colors.grey.shade600,
+      backgroundColor: Colors.black.withOpacity(0.9),
+      elevation: 10,
       onTap: (index) {
         switch (index) {
           case 0:
@@ -104,64 +146,122 @@ class MarketScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPlayerList(
-    BuildContext context,
-    List<Map<String, dynamic>> players,
-  ) {
+  Widget _buildSearchTab(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: players.length,
-            separatorBuilder: (context, index) => const SizedBox(height: 16),
-            itemBuilder: (context, index) {
-              final player = players[index];
-              return _buildPlayerCard(
-                context,
-                imageUrl: player['imageUrl']!,
-                name: player['name']!,
-                position: player['position']!,
-                stats: player['stats']!,
-                value: player['value']!,
-              );
-            },
+          GlassContainer(
+            height: 50,
+            gradient: LinearGradient(
+              colors: [
+                Colors.deepPurple.withOpacity(0.3),
+                Colors.black.withOpacity(0.3),
+              ],
+            ),
+            borderGradient: LinearGradient(
+              colors: [
+                Colors.cyanAccent.withOpacity(0.8),
+                Colors.pinkAccent.withOpacity(0.8),
+              ],
+            ),
+            blur: 12,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.cyanAccent.withOpacity(0.3),
+                blurRadius: 10,
+                spreadRadius: 2,
+              ),
+            ],
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Tìm kiếm cầu thủ...',
+                hintStyle: TextStyle(
+                  color: Colors.white70,
+                  fontFamily: 'Roboto Condensed',
+                ),
+                prefixIcon: Icon(Icons.search, color: Colors.cyanAccent),
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+              ),
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Roboto Condensed',
+              ),
+              onChanged: (value) {
+                // TODO: Implement search logic
+              },
+            ),
           ),
+          const SizedBox(height: 16),
+          _buildPlayerList(context, searchPlayers),
         ],
       ),
     );
   }
 
-  Widget _buildPlayerCard(
+  Widget _buildPlayerList(
+    BuildContext context,
+    List<Map<String, dynamic>> players,
+  ) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children:
+            players.asMap().entries.map((entry) {
+              final player = entry.value;
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: _buildPlayerItem(
+                  context,
+                  imageUrl: player['imageUrl']!,
+                  name: player['name']!,
+                  position: player['position']!,
+                  stats: player['stats']!,
+                  value: player['value']!,
+                  isYourPlayer: players == yourPlayers,
+                ),
+              );
+            }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildPlayerItem(
     BuildContext context, {
     required String imageUrl,
     required String name,
     required String position,
     required Map<String, int> stats,
     required int value,
+    required bool isYourPlayer,
   }) {
     return GlassContainer(
-      height: 100,
+      height: 80,
       width: double.infinity,
       gradient: LinearGradient(
-        colors: [Colors.white.withOpacity(0.3), Colors.white.withOpacity(0.1)],
+        colors: [
+          Colors.deepPurple.withOpacity(0.3),
+          Colors.black.withOpacity(0.3),
+        ],
       ),
       borderGradient: LinearGradient(
         colors: [
-          Colors.white.withOpacity(0.8),
-          Colors.blueAccent.withOpacity(0.3),
+          Colors.cyanAccent.withOpacity(0.8),
+          Colors.pinkAccent.withOpacity(0.8),
         ],
       ),
       blur: 12,
       borderRadius: BorderRadius.circular(16),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.1),
+          color: Colors.cyanAccent.withOpacity(0.3),
           blurRadius: 10,
           spreadRadius: 2,
-          offset: const Offset(0, 4),
         ),
       ],
       child: Row(
@@ -170,28 +270,60 @@ class MarketScreen extends StatelessWidget {
             borderRadius: const BorderRadius.horizontal(
               left: Radius.circular(16),
             ),
-            child: Ink.image(
-              image: NetworkImage(imageUrl),
-              width: 80,
-              height: 100,
+            child: Image.network(
+              imageUrl,
+              width: 60,
+              height: 80,
               fit: BoxFit.cover,
-              child: InkWell(
-                onTap: () {
-                  _showPlayerDetails(context, name, position, stats, value);
-                },
-              ),
+              errorBuilder:
+                  (context, error, stackTrace) => Container(
+                    width: 60,
+                    height: 80,
+                    color: Colors.grey.shade800,
+                    child: const Icon(Icons.error, color: Colors.red, size: 30),
+                  ),
             ),
           ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                name,
-                style: TextStyle(
-                  color: Colors.deepPurple.shade900,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      color: Colors.cyanAccent,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Orbitron',
+                      shadows: [
+                        Shadow(
+                          color: Colors.cyanAccent.withOpacity(0.5),
+                          blurRadius: 6,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    position,
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                      fontFamily: 'Roboto Condensed',
+                    ),
+                  ),
+                  Text(
+                    '$value triệu €',
+                    style: TextStyle(
+                      color: Colors.yellow.shade300,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Orbitron',
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -205,7 +337,8 @@ class MarketScreen extends StatelessWidget {
                     _showPlayerDetails(context, name, position, stats, value);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple.shade700,
+                    backgroundColor: Colors.deepPurple.shade800,
+                    foregroundColor: Colors.cyanAccent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -213,34 +346,72 @@ class MarketScreen extends StatelessWidget {
                       horizontal: 12,
                       vertical: 8,
                     ),
+                    shadowColor: Colors.cyanAccent.withOpacity(0.5),
+                    elevation: 4,
                   ),
                   child: const Text(
                     'Chi tiết',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontFamily: 'Roboto Condensed',
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
-                ElevatedButton(
-                  onPressed: () {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text('Mua $name')));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade600,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                isYourPlayer
+                    ? OutlinedButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text('Bán $name')));
+                      },
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Colors.red.shade600),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                      ),
+                      child: Text(
+                        'Bán',
+                        style: TextStyle(
+                          color: Colors.red.shade600,
+                          fontSize: 12,
+                          fontFamily: 'Roboto Condensed',
+                        ),
+                      ),
+                    )
+                    : ElevatedButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text('Mua $name')));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green.shade600,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        shadowColor: Colors.cyanAccent.withOpacity(0.5),
+                        elevation: 4,
+                      ),
+                      child: const Text(
+                        'Mua',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontFamily: 'Roboto Condensed',
+                        ),
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                  ),
-                  child: const Text(
-                    'Mua',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
               ],
             ),
           ),
@@ -266,18 +437,25 @@ class MarketScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.5,
               gradient: LinearGradient(
                 colors: [
-                  Colors.white.withOpacity(0.3),
-                  Colors.white.withOpacity(0.1),
+                  Colors.deepPurple.withOpacity(0.3),
+                  Colors.black.withOpacity(0.3),
                 ],
               ),
               borderGradient: LinearGradient(
                 colors: [
-                  Colors.white.withOpacity(0.8),
-                  Colors.blueAccent.withOpacity(0.3),
+                  Colors.cyanAccent.withOpacity(0.8),
+                  Colors.pinkAccent.withOpacity(0.8),
                 ],
               ),
               blur: 12,
               borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.cyanAccent.withOpacity(0.3),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+              ],
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -286,34 +464,44 @@ class MarketScreen extends StatelessWidget {
                     Text(
                       name,
                       style: TextStyle(
-                        color: Colors.deepPurple.shade900,
+                        color: Colors.cyanAccent,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Orbitron',
+                        shadows: [
+                          Shadow(
+                            color: Colors.cyanAccent.withOpacity(0.5),
+                            blurRadius: 6,
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'Vị trí: $position',
                       style: TextStyle(
-                        color: Colors.deepPurple.shade700,
+                        color: Colors.white70,
                         fontSize: 16,
+                        fontFamily: 'Roboto Condensed',
                       ),
                     ),
                     Text(
                       'Giá trị: $value triệu €',
                       style: TextStyle(
-                        color: Colors.deepPurple.shade900,
+                        color: Colors.yellow.shade300,
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Orbitron',
                       ),
                     ),
                     const SizedBox(height: 16),
-                    const Text(
+                    Text(
                       'Chỉ số:',
                       style: TextStyle(
-                        color: Colors.deepPurple,
+                        color: Colors.cyanAccent,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Orbitron',
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -332,7 +520,8 @@ class MarketScreen extends StatelessWidget {
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple.shade700,
+                          backgroundColor: Colors.deepPurple.shade800,
+                          foregroundColor: Colors.cyanAccent,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -340,10 +529,16 @@ class MarketScreen extends StatelessWidget {
                             horizontal: 20,
                             vertical: 12,
                           ),
+                          shadowColor: Colors.cyanAccent.withOpacity(0.5),
+                          elevation: 4,
                         ),
                         child: const Text(
                           'Đóng',
-                          style: TextStyle(color: Colors.white, fontSize: 14),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Roboto Condensed',
+                          ),
                         ),
                       ),
                     ),
@@ -360,14 +555,19 @@ class MarketScreen extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(color: Colors.deepPurple.shade900, fontSize: 14),
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 14,
+            fontFamily: 'Roboto Condensed',
+          ),
         ),
         Text(
           '$value',
           style: TextStyle(
-            color: Colors.deepPurple.shade900,
+            color: Colors.cyanAccent,
             fontSize: 16,
             fontWeight: FontWeight.bold,
+            fontFamily: 'Orbitron',
           ),
         ),
       ],

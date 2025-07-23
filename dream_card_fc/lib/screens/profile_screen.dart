@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -10,7 +11,7 @@ class ProfileScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.deepPurple.shade100, Colors.white],
+            colors: [Colors.black, Colors.deepPurple.shade900],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -23,44 +24,51 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Text(
                   '👤 Hồ Sơ Người Dùng',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Colors.deepPurple.shade900,
+                  style: TextStyle(
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
+                    color: Colors.cyanAccent,
+                    fontFamily: 'Orbitron',
+                    shadows: [
+                      Shadow(
+                        color: Colors.cyanAccent.withOpacity(0.5),
+                        blurRadius: 8,
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   'Quản lý thông tin và đội hình của bạn!',
                   style: TextStyle(
-                    color: Colors.deepPurple.shade700,
+                    color: Colors.white70,
                     fontSize: 16,
+                    fontFamily: 'Roboto Condensed',
                   ),
                 ),
                 const SizedBox(height: 24),
-
                 GlassContainer(
                   width: double.infinity,
                   height: 200,
                   gradient: LinearGradient(
                     colors: [
-                      Colors.white.withOpacity(0.3),
-                      Colors.white.withOpacity(0.1),
+                      Colors.deepPurple.withOpacity(0.3),
+                      Colors.black.withOpacity(0.3),
                     ],
                   ),
                   borderGradient: LinearGradient(
                     colors: [
-                      Colors.white.withOpacity(0.8),
-                      Colors.blueAccent.withOpacity(0.3),
+                      Colors.cyanAccent.withOpacity(0.8),
+                      Colors.pinkAccent.withOpacity(0.8),
                     ],
                   ),
                   blur: 12,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.cyanAccent.withOpacity(0.3),
                       blurRadius: 10,
                       spreadRadius: 2,
-                      offset: const Offset(0, 4),
                     ),
                   ],
                   child: Padding(
@@ -75,10 +83,15 @@ class ProfileScreen extends StatelessWidget {
                             height: 80,
                             fit: BoxFit.cover,
                             errorBuilder:
-                                (context, error, stackTrace) => const Icon(
-                                  Icons.account_circle,
-                                  size: 80,
-                                  color: Colors.grey,
+                                (context, error, stackTrace) => Container(
+                                  width: 80,
+                                  height: 80,
+                                  color: Colors.grey.shade800,
+                                  child: const Icon(
+                                    Icons.account_circle,
+                                    size: 80,
+                                    color: Colors.cyanAccent,
+                                  ),
                                 ),
                           ),
                         ),
@@ -89,19 +102,27 @@ class ProfileScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Homie', 
+                                'Homie',
                                 style: TextStyle(
-                                  color: Colors.deepPurple.shade900,
+                                  color: Colors.cyanAccent,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: 'Orbitron',
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors.cyanAccent.withOpacity(0.5),
+                                      blurRadius: 6,
+                                    ),
+                                  ],
                                 ),
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                'homie@example.com', 
+                                'homie@example.com',
                                 style: TextStyle(
-                                  color: Colors.deepPurple.shade700,
+                                  color: Colors.white70,
                                   fontSize: 14,
+                                  fontFamily: 'Roboto Condensed',
                                 ),
                               ),
                               const SizedBox(height: 16),
@@ -119,6 +140,7 @@ class ProfileScreen extends StatelessWidget {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.red.shade600,
+                                  foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
                                   ),
@@ -126,12 +148,17 @@ class ProfileScreen extends StatelessWidget {
                                     horizontal: 20,
                                     vertical: 12,
                                   ),
+                                  shadowColor: Colors.cyanAccent.withOpacity(
+                                    0.5,
+                                  ),
+                                  elevation: 4,
                                 ),
                                 child: const Text(
                                   'Đăng Xuất',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
+                                    fontFamily: 'Roboto Condensed',
                                   ),
                                 ),
                               ),
@@ -142,15 +169,123 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 24),
-
+                Text(
+                  '🎁 Nhập Gift Code',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.cyanAccent,
+                    fontFamily: 'Orbitron',
+                    shadows: [
+                      Shadow(
+                        color: Colors.cyanAccent.withOpacity(0.5),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                GlassContainer(
+                  width: double.infinity,
+                  height: 60,
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.deepPurple.withOpacity(0.3),
+                      Colors.black.withOpacity(0.3),
+                    ],
+                  ),
+                  borderGradient: LinearGradient(
+                    colors: [
+                      Colors.cyanAccent.withOpacity(0.8),
+                      Colors.pinkAccent.withOpacity(0.8),
+                    ],
+                  ),
+                  blur: 12,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.cyanAccent.withOpacity(0.3),
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Nhập mã gift code...',
+                              hintStyle: TextStyle(
+                                color: Colors.white70,
+                                fontFamily: 'Roboto Condensed',
+                              ),
+                              border: InputBorder.none,
+                            ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Roboto Condensed',
+                            ),
+                            onSubmitted: (value) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Đã nhập mã: $value')),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Xác nhận mã gift code'),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green.shade600,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            shadowColor: Colors.cyanAccent.withOpacity(0.5),
+                            elevation: 4,
+                          ),
+                          child: const Text(
+                            'Xác nhận',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontFamily: 'Roboto Condensed',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
                 Text(
                   '📊 Thống Kê Đội Hình',
                   style: TextStyle(
-                    color: Colors.deepPurple.shade900,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    color: Colors.cyanAccent,
+                    fontFamily: 'Orbitron',
+                    shadows: [
+                      Shadow(
+                        color: Colors.cyanAccent.withOpacity(0.5),
+                        blurRadius: 8,
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -159,24 +294,23 @@ class ProfileScreen extends StatelessWidget {
                   height: 120,
                   gradient: LinearGradient(
                     colors: [
-                      Colors.white.withOpacity(0.3),
-                      Colors.white.withOpacity(0.1),
+                      Colors.deepPurple.withOpacity(0.3),
+                      Colors.black.withOpacity(0.3),
                     ],
                   ),
                   borderGradient: LinearGradient(
                     colors: [
-                      Colors.white.withOpacity(0.8),
-                      Colors.blueAccent.withOpacity(0.3),
+                      Colors.cyanAccent.withOpacity(0.8),
+                      Colors.pinkAccent.withOpacity(0.8),
                     ],
                   ),
                   blur: 12,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.cyanAccent.withOpacity(0.3),
                       blurRadius: 10,
                       spreadRadius: 2,
-                      offset: const Offset(0, 4),
                     ),
                   ],
                   child: Padding(
@@ -189,23 +323,31 @@ class ProfileScreen extends StatelessWidget {
                           children: [
                             const Icon(
                               Icons.people,
-                              color: Colors.deepPurple,
+                              color: Colors.cyanAccent,
                               size: 30,
                             ),
                             const SizedBox(height: 8),
                             Text(
                               'Số cầu thủ',
                               style: TextStyle(
-                                color: Colors.deepPurple.shade900,
+                                color: Colors.white70,
+                                fontFamily: 'Roboto Condensed',
                               ),
                             ),
-                            Text(
-                              '15',
-                              style: TextStyle(
-                                color: Colors.deepPurple.shade900,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            AnimatedTextKit(
+                              animatedTexts: [
+                                TyperAnimatedText(
+                                  '15',
+                                  textStyle: TextStyle(
+                                    color: Colors.cyanAccent,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Orbitron',
+                                  ),
+                                  speed: const Duration(milliseconds: 100),
+                                ),
+                              ],
+                              isRepeatingAnimation: false,
                             ),
                           ],
                         ),
@@ -214,23 +356,31 @@ class ProfileScreen extends StatelessWidget {
                           children: [
                             const Icon(
                               Icons.monetization_on,
-                              color: Colors.deepPurple,
+                              color: Colors.cyanAccent,
                               size: 30,
                             ),
                             const SizedBox(height: 8),
                             Text(
                               'Tổng giá trị',
                               style: TextStyle(
-                                color: Colors.deepPurple.shade900,
+                                color: Colors.white70,
+                                fontFamily: 'Roboto Condensed',
                               ),
                             ),
-                            Text(
-                              '250 triệu €',
-                              style: TextStyle(
-                                color: Colors.deepPurple.shade900,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            AnimatedTextKit(
+                              animatedTexts: [
+                                TyperAnimatedText(
+                                  '250 triệu €',
+                                  textStyle: TextStyle(
+                                    color: Colors.cyanAccent,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Orbitron',
+                                  ),
+                                  speed: const Duration(milliseconds: 100),
+                                ),
+                              ],
+                              isRepeatingAnimation: false,
                             ),
                           ],
                         ),
@@ -243,7 +393,6 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
       ),
-
       bottomNavigationBar: _buildBottomNavigationBar(context, 4),
     );
   }
@@ -251,10 +400,10 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildBottomNavigationBar(BuildContext context, int currentIndex) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      selectedItemColor: Colors.deepPurple,
-      unselectedItemColor: Colors.grey,
-      backgroundColor: Colors.white.withOpacity(0.9),
-      elevation: 8,
+      selectedItemColor: Colors.cyanAccent,
+      unselectedItemColor: Colors.grey.shade600,
+      backgroundColor: Colors.black.withOpacity(0.9),
+      elevation: 10,
       onTap: (index) {
         switch (index) {
           case 0:

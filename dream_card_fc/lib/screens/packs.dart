@@ -10,7 +10,7 @@ class PacksScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.deepPurple.shade100, Colors.white],
+            colors: [Colors.black, Colors.deepPurple.shade900],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -22,47 +22,72 @@ class PacksScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '🔥 Các Gói Thẻ Hấp Dẫn',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Colors.deepPurple.shade900,
+                  '🔥 Gói Thẻ Hot',
+                  style: TextStyle(
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
+                    color: Colors.cyanAccent,
+                    fontFamily: 'Orbitron',
+                    shadows: [
+                      Shadow(
+                        color: Colors.cyanAccent.withOpacity(0.5),
+                        blurRadius: 8,
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 12),
-                Text(
-                  'Khám phá các gói thẻ để sở hữu những cầu thủ yêu thích!',
-                  style: TextStyle(
-                    color: Colors.deepPurple.shade700,
-                    fontSize: 16,
+                SizedBox(
+                  height: 260,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      _buildHotPackCard(
+                        context,
+                        imageUrl:
+                            'https://pbs.twimg.com/media/Gu3TcogXsAEFHcO.jpg:large',
+                        title: 'Gói Thẻ Man Utd',
+                        subtitle: 'Cơ hội sở hữu các cầu thủ Man Utd!',
+                        price: '1000 xu',
+                      ),
+                      const SizedBox(width: 16),
+                      _buildHotPackCard(
+                        context,
+                        imageUrl:
+                            'https://pbs.twimg.com/media/Gu3TcogXsAEFHcO.jpg:large',
+                        title: 'Gói Siêu Sao Trẻ',
+                        subtitle: 'Mở ra K. Mbappé, Bellingham,...',
+                        price: '1500 xu',
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 24),
-
+                Text(
+                  '🃏 Các Gói Thẻ Khác',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.cyanAccent,
+                    fontFamily: 'Orbitron',
+                    shadows: [
+                      Shadow(
+                        color: Colors.cyanAccent.withOpacity(0.5),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
                 GridView.count(
                   crossAxisCount: 2,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   mainAxisSpacing: 16,
                   crossAxisSpacing: 16,
-                  childAspectRatio: 0.75, 
+                  childAspectRatio: 0.75,
                   children: [
-                    _buildPackCard(
-                      context,
-                      imageUrl:
-                          'https://pbs.twimg.com/media/Gu3TcogXsAEFHcO.jpg:large',
-                      title: 'Gói Thẻ Man Utd',
-                      subtitle: 'Cơ hội sở hữu các cầu thủ Man Utd!',
-                      price: '1000 xu',
-                    ),
-                    _buildPackCard(
-                      context,
-                      imageUrl:
-                          'https://pbs.twimg.com/media/Gu3TcogXsAEFHcO.jpg:large',
-                      title: 'Gói Siêu Sao Trẻ',
-                      subtitle: 'Mở ra K. Mbappé, Bellingham,...',
-                      price: '1500 xu',
-                    ),
-                    _buildPackCard(
+                    _buildRegularPackCard(
                       context,
                       imageUrl:
                           'https://pbs.twimg.com/media/Gu3TcogXsAEFHcO.jpg:large',
@@ -70,7 +95,7 @@ class PacksScreen extends StatelessWidget {
                       subtitle: 'Sở hữu Messi, Ronaldo,...',
                       price: '2000 xu',
                     ),
-                    _buildPackCard(
+                    _buildRegularPackCard(
                       context,
                       imageUrl:
                           'https://pbs.twimg.com/media/Gu3TcogXsAEFHcO.jpg:large',
@@ -85,13 +110,12 @@ class PacksScreen extends StatelessWidget {
           ),
         ),
       ),
-
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1, 
-        selectedItemColor: Colors.deepPurple,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.white.withOpacity(0.9),
-        elevation: 8,
+        currentIndex: 1,
+        selectedItemColor: Colors.cyanAccent,
+        unselectedItemColor: Colors.grey.shade600,
+        backgroundColor: Colors.black.withOpacity(0.9),
+        elevation: 10,
         onTap: (index) {
           if (index == 2) {
             Navigator.pushReplacementNamed(context, '/home');
@@ -123,7 +147,7 @@ class PacksScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPackCard(
+  Widget _buildHotPackCard(
     BuildContext context, {
     required String imageUrl,
     required String title,
@@ -131,43 +155,52 @@ class PacksScreen extends StatelessWidget {
     required String price,
   }) {
     return GlassContainer(
-      height: 240,
+      height: 260,
+      width: 300,
       gradient: LinearGradient(
-        colors: [Colors.white.withOpacity(0.3), Colors.white.withOpacity(0.1)],
+        colors: [
+          Colors.deepPurple.withOpacity(0.3),
+          Colors.black.withOpacity(0.3),
+        ],
       ),
       borderGradient: LinearGradient(
         colors: [
-          Colors.white.withOpacity(0.8),
-          Colors.blueAccent.withOpacity(0.3),
+          Colors.cyanAccent.withOpacity(0.8),
+          Colors.pinkAccent.withOpacity(0.8),
         ],
       ),
       blur: 12,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(20),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.1),
+          color: Colors.cyanAccent.withOpacity(0.3),
           blurRadius: 10,
           spreadRadius: 2,
-          offset: const Offset(0, 4),
         ),
       ],
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Ink.image(
-              image: NetworkImage(imageUrl),
-              height: 240,
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              imageUrl,
+              height: 260,
+              width: 300,
               fit: BoxFit.cover,
-              child: InkWell(
-                onTap: () {
-                  // TODO: Xử lý khi nhấn vào gói thẻ
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text('Đã chọn $title')));
-                },
-              ),
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return const Center(child: CircularProgressIndicator());
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  height: 260,
+                  color: Colors.grey.shade800,
+                  child: const Center(
+                    child: Icon(Icons.error, color: Colors.red, size: 40),
+                  ),
+                );
+              },
             ),
           ),
           Container(
@@ -175,7 +208,7 @@ class PacksScreen extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.black.withOpacity(0.7), Colors.transparent],
+                colors: [Colors.black.withOpacity(0.8), Colors.transparent],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
               ),
@@ -186,15 +219,200 @@ class PacksScreen extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+                  style: TextStyle(
+                    color: Colors.cyanAccent,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Orbitron',
+                    shadows: [
+                      Shadow(
+                        color: Colors.cyanAccent.withOpacity(0.5),
+                        blurRadius: 6,
+                      ),
+                    ],
                   ),
                 ),
                 Text(
                   subtitle,
-                  style: const TextStyle(color: Colors.white70, fontSize: 12),
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14,
+                    fontFamily: 'Roboto Condensed',
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      price,
+                      style: TextStyle(
+                        color: Colors.yellow.shade300,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        fontFamily: 'Orbitron',
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Mở $title')),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepPurple.shade800,
+                            foregroundColor: Colors.cyanAccent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            shadowColor: Colors.cyanAccent.withOpacity(0.5),
+                            elevation: 4,
+                          ),
+                          child: const Text(
+                            'Mở gói',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontFamily: 'Roboto Condensed',
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        OutlinedButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Xem chi tiết $title')),
+                            );
+                          },
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(
+                              color: Colors.cyanAccent.withOpacity(0.8),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                          ),
+                          child: Text(
+                            'Chi tiết',
+                            style: TextStyle(
+                              color: Colors.cyanAccent,
+                              fontSize: 12,
+                              fontFamily: 'Roboto Condensed',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRegularPackCard(
+    BuildContext context, {
+    required String imageUrl,
+    required String title,
+    required String subtitle,
+    required String price,
+  }) {
+    return GlassContainer(
+      height: 240,
+      gradient: LinearGradient(
+        colors: [
+          Colors.deepPurple.withOpacity(0.3),
+          Colors.black.withOpacity(0.3),
+        ],
+      ),
+      borderGradient: LinearGradient(
+        colors: [
+          Colors.cyanAccent.withOpacity(0.8),
+          Colors.pinkAccent.withOpacity(0.8),
+        ],
+      ),
+      blur: 12,
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.cyanAccent.withOpacity(0.3),
+          blurRadius: 10,
+          spreadRadius: 2,
+        ),
+      ],
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              imageUrl,
+              height: 240,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return const Center(child: CircularProgressIndicator());
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  height: 240,
+                  color: Colors.grey.shade800,
+                  child: const Center(
+                    child: Icon(Icons.error, color: Colors.red, size: 40),
+                  ),
+                );
+              },
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.black.withOpacity(0.8), Colors.transparent],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.cyanAccent,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Orbitron',
+                    shadows: [
+                      Shadow(
+                        color: Colors.cyanAccent.withOpacity(0.5),
+                        blurRadius: 6,
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 12,
+                    fontFamily: 'Roboto Condensed',
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -206,29 +424,68 @@ class PacksScreen extends StatelessWidget {
                         color: Colors.yellow.shade300,
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
+                        fontFamily: 'Orbitron',
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // TODO: Xử lý hành động mở gói
-                        ScaffoldMessenger.of(
-                          context,
-                        ).showSnackBar(SnackBar(content: Text('Mở $title')));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple.shade700,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Mở $title')),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepPurple.shade800,
+                            foregroundColor: Colors.cyanAccent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            shadowColor: Colors.cyanAccent.withOpacity(0.5),
+                            elevation: 4,
+                          ),
+                          child: const Text(
+                            'Mở gói',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontFamily: 'Roboto Condensed',
+                            ),
+                          ),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
+                        const SizedBox(width: 8),
+                        OutlinedButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Xem chi tiết $title')),
+                            );
+                          },
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(
+                              color: Colors.cyanAccent.withOpacity(0.8),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                          ),
+                          child: Text(
+                            'Chi tiết',
+                            style: TextStyle(
+                              color: Colors.cyanAccent,
+                              fontSize: 12,
+                              fontFamily: 'Roboto Condensed',
+                            ),
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        'Mở gói',
-                        style: TextStyle(color: Colors.white, fontSize: 12),
-                      ),
+                      ],
                     ),
                   ],
                 ),

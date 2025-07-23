@@ -1,4 +1,8 @@
+import 'package:dream_card_fc/screens/checkin_screen.dart';
+import 'package:dream_card_fc/screens/mission_screen.dart';
 import 'package:dream_card_fc/screens/packs.dart';
+import 'package:dream_card_fc/screens/pitch_screen.dart';
+import 'package:dream_card_fc/screens/ranking_screen.dart';
 import 'package:flutter/material.dart';
 import '../screens/login_screen.dart';
 import '../screens/register_screen.dart';
@@ -16,6 +20,11 @@ class AppRoutes {
     '/packs': (context) => PacksScreen(),
     '/market': (context) => const MarketScreen(),
     '/players': (context) => const PlayersScreen(),
-    '/profile': (context) => const NotificationsScreen(),
+    '/profile': (context) => const ProfileScreen(),
+    '/notifications': (context) => const NotificationsScreen(),
+    '/ranking': (context) => const LeaderboardScreen(),
+    '/checkin': (context) => const CheckInScreen(),
+    '/missions': (context) => const MissionsScreen(),
+    '/pitch': (context) => const PitchScreen(),
   };
 }

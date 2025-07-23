@@ -60,10 +60,7 @@ class NotificationsScreen extends StatelessWidget {
         ),
       ),
 
-      bottomNavigationBar: _buildBottomNavigationBar(
-        context,
-        5,
-      ), 
+      bottomNavigationBar: _buildBottomNavigationBar(context, 4),
     );
   }
 
@@ -89,9 +86,6 @@ class NotificationsScreen extends StatelessWidget {
             Navigator.pushReplacementNamed(context, '/players');
             break;
           case 4:
-            Navigator.pushReplacementNamed(context, '/profile');
-            break;
-          case 5:
             break;
         }
       },
@@ -102,10 +96,6 @@ class NotificationsScreen extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.sports_soccer),
           label: 'Players',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle),
-          label: 'Profile',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications),

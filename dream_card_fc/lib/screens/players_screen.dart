@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
 
-class PlayersScreen extends StatelessWidget {
+class PlayersScreen extends StatefulWidget {
   const PlayersScreen({super.key});
+
+  @override
+  State<PlayersScreen> createState() => _PlayersScreenState();
+}
+
+class _PlayersScreenState extends State<PlayersScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,58 +30,91 @@ class PlayersScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.deepPurple.shade100, Colors.white],
+            colors: [Colors.black, Colors.deepPurple.shade900],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
                   '⚽ Danh Sách Cầu Thủ',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Colors.deepPurple.shade900,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'Khám phá bộ sưu tập cầu thủ của bạn!',
                   style: TextStyle(
-                    color: Colors.deepPurple.shade700,
-                    fontSize: 16,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.cyanAccent,
+                    fontFamily: 'Orbitron',
+                    shadows: [
+                      Shadow(
+                        color: Colors.cyanAccent.withOpacity(0.5),
+                        blurRadius: 8,
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 24),
-
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: samplePlayers.length,
-                  separatorBuilder:
-                      (context, index) => const SizedBox(height: 16),
-                  itemBuilder: (context, index) {
-                    final player = samplePlayers[index];
-                    return _buildPlayerCard(
-                      context,
-                      imageUrl: player['imageUrl']!,
-                      name: player['name']!,
-                      position: player['position']!,
-                      stats: player['stats']!,
-                      value: player['value']!,
-                    );
-                  },
+              ),
+              GlassContainer(
+                height: 50,
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.deepPurple.withOpacity(0.3),
+                    Colors.black.withOpacity(0.3),
+                  ],
                 ),
-              ],
-            ),
+                borderGradient: LinearGradient(
+                  colors: [
+                    Colors.cyanAccent.withOpacity(0.8),
+                    Colors.pinkAccent.withOpacity(0.8),
+                  ],
+                ),
+                blur: 12,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.cyanAccent.withOpacity(0.3),
+                    blurRadius: 10,
+                    spreadRadius: 2,
+                  ),
+                ],
+                child: TabBar(
+                  controller: _tabController,
+                  labelColor: Colors.cyanAccent,
+                  unselectedLabelColor: Colors.white70,
+                  indicatorColor: Colors.cyanAccent,
+                  labelStyle: const TextStyle(
+                    fontFamily: 'Orbitron',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                  unselectedLabelStyle: const TextStyle(
+                    fontFamily: 'Roboto Condensed',
+                    fontSize: 14,
+                  ),
+                  tabs: const [
+                    Tab(text: 'Đội hình chính'),
+                    Tab(text: 'Cầu thủ dự bị'),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    _buildPlayerList(context, startingPlayers),
+                    _buildPlayerList(context, substitutePlayers),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
-
       bottomNavigationBar: _buildBottomNavigationBar(context, 3),
     );
   }
@@ -69,10 +122,10 @@ class PlayersScreen extends StatelessWidget {
   Widget _buildBottomNavigationBar(BuildContext context, int currentIndex) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      selectedItemColor: Colors.deepPurple,
-      unselectedItemColor: Colors.grey,
-      backgroundColor: Colors.white.withOpacity(0.9),
-      elevation: 8,
+      selectedItemColor: Colors.cyanAccent,
+      unselectedItemColor: Colors.grey.shade600,
+      backgroundColor: Colors.black.withOpacity(0.9),
+      elevation: 10,
       onTap: (index) {
         switch (index) {
           case 0:
@@ -107,7 +160,33 @@ class PlayersScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPlayerCard(
+  Widget _buildPlayerList(
+    BuildContext context,
+    List<Map<String, dynamic>> players,
+  ) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children:
+            players.asMap().entries.map((entry) {
+              final player = entry.value;
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: _buildPlayerItem(
+                  context,
+                  imageUrl: player['imageUrl']!,
+                  name: player['name']!,
+                  position: player['position']!,
+                  stats: player['stats']!,
+                  value: player['value']!,
+                ),
+              );
+            }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildPlayerItem(
     BuildContext context, {
     required String imageUrl,
     required String name,
@@ -116,25 +195,27 @@ class PlayersScreen extends StatelessWidget {
     required int value,
   }) {
     return GlassContainer(
-      height: 100,
+      height: 80,
       width: double.infinity,
       gradient: LinearGradient(
-        colors: [Colors.white.withOpacity(0.3), Colors.white.withOpacity(0.1)],
+        colors: [
+          Colors.deepPurple.withOpacity(0.3),
+          Colors.black.withOpacity(0.3),
+        ],
       ),
       borderGradient: LinearGradient(
         colors: [
-          Colors.white.withOpacity(0.8),
-          Colors.blueAccent.withOpacity(0.3),
+          Colors.cyanAccent.withOpacity(0.8),
+          Colors.pinkAccent.withOpacity(0.8),
         ],
       ),
       blur: 12,
       borderRadius: BorderRadius.circular(16),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.1),
+          color: Colors.cyanAccent.withOpacity(0.3),
           blurRadius: 10,
           spreadRadius: 2,
-          offset: const Offset(0, 4),
         ),
       ],
       child: Row(
@@ -143,28 +224,60 @@ class PlayersScreen extends StatelessWidget {
             borderRadius: const BorderRadius.horizontal(
               left: Radius.circular(16),
             ),
-            child: Ink.image(
-              image: NetworkImage(imageUrl),
-              width: 80,
-              height: 100,
+            child: Image.network(
+              imageUrl,
+              width: 60,
+              height: 80,
               fit: BoxFit.cover,
-              child: InkWell(
-                onTap: () {
-                  _showPlayerDetails(context, name, position, stats, value);
-                },
-              ),
+              errorBuilder:
+                  (context, error, stackTrace) => Container(
+                    width: 60,
+                    height: 80,
+                    color: Colors.grey.shade800,
+                    child: const Icon(Icons.error, color: Colors.red, size: 30),
+                  ),
             ),
           ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                name,
-                style: TextStyle(
-                  color: Colors.deepPurple.shade900,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      color: Colors.cyanAccent,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Orbitron',
+                      shadows: [
+                        Shadow(
+                          color: Colors.cyanAccent.withOpacity(0.5),
+                          blurRadius: 6,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    position,
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                      fontFamily: 'Roboto Condensed',
+                    ),
+                  ),
+                  Text(
+                    '$value triệu €',
+                    style: TextStyle(
+                      color: Colors.yellow.shade300,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Orbitron',
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -178,7 +291,8 @@ class PlayersScreen extends StatelessWidget {
                     _showPlayerDetails(context, name, position, stats, value);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple.shade700,
+                    backgroundColor: Colors.deepPurple.shade800,
+                    foregroundColor: Colors.cyanAccent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -186,21 +300,27 @@ class PlayersScreen extends StatelessWidget {
                       horizontal: 12,
                       vertical: 8,
                     ),
+                    shadowColor: Colors.cyanAccent.withOpacity(0.5),
+                    elevation: 4,
                   ),
                   child: const Text(
                     'Chi tiết',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontFamily: 'Roboto Condensed',
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
-                ElevatedButton(
+                OutlinedButton(
                   onPressed: () {
                     ScaffoldMessenger.of(
                       context,
                     ).showSnackBar(SnackBar(content: Text('Bán $name')));
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red.shade600,
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: Colors.red.shade600),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -209,9 +329,13 @@ class PlayersScreen extends StatelessWidget {
                       vertical: 8,
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Bán',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: TextStyle(
+                      color: Colors.red.shade600,
+                      fontSize: 12,
+                      fontFamily: 'Roboto Condensed',
+                    ),
                   ),
                 ),
               ],
@@ -239,18 +363,25 @@ class PlayersScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.5,
               gradient: LinearGradient(
                 colors: [
-                  Colors.white.withOpacity(0.3),
-                  Colors.white.withOpacity(0.1),
+                  Colors.deepPurple.withOpacity(0.3),
+                  Colors.black.withOpacity(0.3),
                 ],
               ),
               borderGradient: LinearGradient(
                 colors: [
-                  Colors.white.withOpacity(0.8),
-                  Colors.blueAccent.withOpacity(0.3),
+                  Colors.cyanAccent.withOpacity(0.8),
+                  Colors.pinkAccent.withOpacity(0.8),
                 ],
               ),
               blur: 12,
               borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.cyanAccent.withOpacity(0.3),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+              ],
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -259,34 +390,44 @@ class PlayersScreen extends StatelessWidget {
                     Text(
                       name,
                       style: TextStyle(
-                        color: Colors.deepPurple.shade900,
+                        color: Colors.cyanAccent,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Orbitron',
+                        shadows: [
+                          Shadow(
+                            color: Colors.cyanAccent.withOpacity(0.5),
+                            blurRadius: 6,
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'Vị trí: $position',
                       style: TextStyle(
-                        color: Colors.deepPurple.shade700,
+                        color: Colors.white70,
                         fontSize: 16,
+                        fontFamily: 'Roboto Condensed',
                       ),
                     ),
                     Text(
                       'Giá trị: $value triệu €',
                       style: TextStyle(
-                        color: Colors.deepPurple.shade900,
+                        color: Colors.yellow.shade300,
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Orbitron',
                       ),
                     ),
                     const SizedBox(height: 16),
-                    const Text(
+                    Text(
                       'Chỉ số:',
                       style: TextStyle(
-                        color: Colors.deepPurple,
+                        color: Colors.cyanAccent,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Orbitron',
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -302,10 +443,11 @@ class PlayersScreen extends StatelessWidget {
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context); 
+                          Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple.shade700,
+                          backgroundColor: Colors.deepPurple.shade800,
+                          foregroundColor: Colors.cyanAccent,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -313,10 +455,16 @@ class PlayersScreen extends StatelessWidget {
                             horizontal: 20,
                             vertical: 12,
                           ),
+                          shadowColor: Colors.cyanAccent.withOpacity(0.5),
+                          elevation: 4,
                         ),
                         child: const Text(
                           'Đóng',
-                          style: TextStyle(color: Colors.white, fontSize: 14),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Roboto Condensed',
+                          ),
                         ),
                       ),
                     ),
@@ -333,21 +481,26 @@ class PlayersScreen extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(color: Colors.deepPurple.shade900, fontSize: 14),
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 14,
+            fontFamily: 'Roboto Condensed',
+          ),
         ),
         Text(
           '$value',
           style: TextStyle(
-            color: Colors.deepPurple.shade900,
+            color: Colors.cyanAccent,
             fontSize: 16,
             fontWeight: FontWeight.bold,
+            fontFamily: 'Orbitron',
           ),
         ),
       ],
     );
   }
 
-  static const List<Map<String, dynamic>> samplePlayers = [
+  static const List<Map<String, dynamic>> startingPlayers = [
     {
       'imageUrl':
           'https://assets.manutd.com/AssetPicker/images/0/0/22/86/1464016/Jadon-Sancho1751383232235.png',
@@ -364,6 +517,9 @@ class PlayersScreen extends StatelessWidget {
       'stats': {'speed': 97, 'shooting': 88, 'passing': 80},
       'value': 150,
     },
+  ];
+
+  static const List<Map<String, dynamic>> substitutePlayers = [
     {
       'imageUrl':
           'https://assets.manutd.com/AssetPicker/images/0/0/22/86/1464016/Jadon-Sancho1751383232235.png',

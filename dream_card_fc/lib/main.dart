@@ -13,19 +13,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Dream Card FC',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        useMaterial3: true,
-      ),
+      theme: ThemeData(primarySwatch: Colors.deepPurple, useMaterial3: true),
       initialRoute: '/home', // Hoặc '/login' nếu cần đăng nhập trước
       routes: AppRoutes.routes,
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => Scaffold(
-            body: Center(
-              child: Text('Không tìm thấy trang: ${settings.name}'),
-            ),
-          ),
+          builder:
+              (context) => Scaffold(
+                body: Center(
+                  child: Text('Không tìm thấy trang: ${settings.name}'),
+                ),
+              ),
         );
       },
     );

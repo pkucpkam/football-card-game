@@ -1,6 +1,6 @@
 import 'package:dream_card_fc/screens/checkin_screen.dart';
 import 'package:dream_card_fc/screens/mission_screen.dart';
-import 'package:dream_card_fc/screens/packs.dart';
+import 'package:dream_card_fc/temp/packs_screen.dart';
 import 'package:dream_card_fc/screens/pitch_screen.dart';
 import 'package:dream_card_fc/screens/ranking_screen.dart';
 import 'package:flutter/material.dart';

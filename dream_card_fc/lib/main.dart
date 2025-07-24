@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Dream Card FC',
       theme: ThemeData(primarySwatch: Colors.deepPurple, useMaterial3: true),
-      initialRoute: '/home', // Hoặc '/login' nếu cần đăng nhập trước
+      initialRoute: '/home', 
       routes: AppRoutes.routes,
       onUnknownRoute: (settings) {
         return MaterialPageRoute(

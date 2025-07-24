@@ -1,3 +1,4 @@
+import 'package:dream_card_fc/widgets/common/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
 
@@ -110,40 +111,7 @@ class PacksScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
-        selectedItemColor: Colors.cyanAccent,
-        unselectedItemColor: Colors.grey.shade600,
-        backgroundColor: Colors.black.withOpacity(0.9),
-        elevation: 10,
-        onTap: (index) {
-          if (index == 2) {
-            Navigator.pushReplacementNamed(context, '/home');
-          } else if (index == 0) {
-            Navigator.pushReplacementNamed(context, '/market');
-          } else if (index == 3) {
-            Navigator.pushReplacementNamed(context, '/players');
-          } else if (index == 4) {
-            Navigator.pushReplacementNamed(context, '/profile');
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Market'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.inventory_2),
-            label: 'Packs',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sports_soccer),
-            label: 'Players',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
-          ),
-        ],
-      ),
+      bottomNavigationBar: BottomNavBar(currentIndex: 0, onTap: (index) {}),
     );
   }
 

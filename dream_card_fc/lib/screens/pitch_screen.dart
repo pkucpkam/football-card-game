@@ -32,40 +32,37 @@ class _PitchScreenState extends State<PitchScreen>
   final List<Map<String, dynamic>> pitchPositions = List.generate(
     11,
     (index) => {
-      'player': null, 
-      'position': _getPositionName(index), 
-      'x': _getXPosition(index), 
-      'y': _getYPosition(index), 
+      'player': null,
+      'position': _getPositionName(index),
+      'x': _getXPosition(index),
+      'y': _getYPosition(index),
     },
   );
 
   static String _getPositionName(int index) {
     const positions = [
-      'GK', 
-      'LB', 'CB1', 'CB2', 'RB', 
-      'LM', 'CM1', 'CM2', 'RM', 
-      'ST1', 'ST2', 
+      'GK',
+      'LB',
+      'CB1',
+      'CB2',
+      'RB',
+      'LM',
+      'CM1',
+      'CM2',
+      'RM',
+      'ST1',
+      'ST2',
     ];
     return positions[index];
   }
 
   static double _getXPosition(int index) {
-    const xPositions = [
-      0.5,
-      0.1, 0.3, 0.7, 0.9, 
-      0.1, 0.3, 0.7, 0.9, 
-      0.3, 0.7, 
-    ];
+    const xPositions = [0.5, 0.1, 0.3, 0.7, 0.9, 0.1, 0.3, 0.7, 0.9, 0.3, 0.7];
     return xPositions[index];
   }
 
   static double _getYPosition(int index) {
-    const yPositions = [
-      0.9, 
-      0.7, 0.7, 0.7, 0.7, 
-      0.5, 0.5, 0.5, 0.5, 
-      0.3, 0.3, 
-    ];
+    const yPositions = [0.9, 0.7, 0.7, 0.7, 0.7, 0.5, 0.5, 0.5, 0.5, 0.3, 0.3];
     return yPositions[index];
   }
 
@@ -337,7 +334,7 @@ class _PitchScreenState extends State<PitchScreen>
                         image: DecorationImage(
                           image: AssetImage(
                             'assets/images/pitch_background.jpg',
-                          ), 
+                          ),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -444,7 +441,7 @@ class _PitchScreenState extends State<PitchScreen>
                           ),
                         ),
                       );
-                    }).toList(),
+                    }),
                   ],
                 ),
               ),
@@ -452,66 +449,6 @@ class _PitchScreenState extends State<PitchScreen>
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(context, 7),
-    );
-  }
-
-  Widget _buildBottomNavigationBar(BuildContext context, int currentIndex) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      selectedItemColor: Colors.cyanAccent,
-      unselectedItemColor: Colors.grey.shade600,
-      backgroundColor: Colors.black.withOpacity(0.9),
-      elevation: 10,
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            Navigator.pushReplacementNamed(context, '/market');
-            break;
-          case 1:
-            Navigator.pushReplacementNamed(context, '/packs');
-            break;
-          case 2:
-            Navigator.pushReplacementNamed(context, '/home');
-            break;
-          case 3:
-            Navigator.pushReplacementNamed(context, '/players');
-            break;
-          case 4:
-            Navigator.pushReplacementNamed(context, '/leaderboard');
-            break;
-          case 5:
-            Navigator.pushReplacementNamed(context, '/checkin');
-            break;
-          case 6:
-            Navigator.pushReplacementNamed(context, '/missions');
-            break;
-          case 7:
-            break;
-        }
-      },
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Market'),
-        BottomNavigationBarItem(icon: Icon(Icons.inventory_2), label: 'Packs'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.sports_soccer),
-          label: 'Players',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.leaderboard),
-          label: 'Leaderboard',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.event_available),
-          label: 'CheckIn',
-        ),
-        BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Missions'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.sports_soccer),
-          label: 'Pitch',
-        ),
-      ],
     );
   }
 }

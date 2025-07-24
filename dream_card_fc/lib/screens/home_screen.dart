@@ -1,3 +1,4 @@
+import 'package:dream_card_fc/widgets/common/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -12,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final int _currentIndex = 2;
   final String userName = 'Homie';
-  final double balance = 500.0; 
+  final double balance = 500.0;
 
   @override
   Widget build(BuildContext context) {
@@ -224,42 +225,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
-        selectedItemColor: Colors.cyanAccent,
-        unselectedItemColor: Colors.grey.shade600,
-        backgroundColor: Colors.black.withOpacity(0.9),
-        elevation: 10,
         onTap: (index) {
-          if (index == 0) {
-            Navigator.pushReplacementNamed(context, '/market');
-          } else if (index == 1) {
-            Navigator.pushReplacementNamed(context, '/packs');
-          } else if (index == 2) {
-            Navigator.pushReplacementNamed(context, '/home');
-          } else if (index == 3) {
-            Navigator.pushReplacementNamed(context, '/players');
-          } else if (index == 4) {
-            Navigator.pushReplacementNamed(context, '/profile');
-          }
         },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Market'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.inventory_2),
-            label: 'Packs',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sports_soccer),
-            label: 'Players',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
-          ),
-        ],
-      ),
+      )
     );
   }
 

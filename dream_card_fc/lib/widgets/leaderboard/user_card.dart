@@ -1,7 +1,6 @@
-
+import 'package:dream_card_fc/widgets/common/coin_display.dart';
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 class UserCard extends StatelessWidget {
   final int rank;
@@ -51,19 +50,20 @@ class UserCard extends StatelessWidget {
             ),
             child: Image.network(
               imageUrl,
-              width: 60,
+              width: 80,
               height: 80,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
-                width: 60,
-                height: 80,
-                color: Colors.grey.shade800,
-                child: const Icon(
-                  Icons.account_circle,
-                  color: Colors.cyanAccent,
-                  size: 40,
-                ),
-              ),
+              errorBuilder:
+                  (context, error, stackTrace) => Container(
+                    width: 60,
+                    height: 80,
+                    color: Colors.grey.shade800,
+                    child: const Icon(
+                      Icons.account_circle,
+                      color: Colors.cyanAccent,
+                      size: 40,
+                    ),
+                  ),
             ),
           ),
           Expanded(
@@ -74,7 +74,23 @@ class UserCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '#$rank $name',
+                    'Hạng $rank',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Orbitron',
+                      shadows: [
+                        Shadow(
+                          color: Colors.cyanAccent.withOpacity(0.5),
+                          blurRadius: 6,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    name,
                     style: TextStyle(
                       color: Colors.cyanAccent,
                       fontSize: 16,
@@ -89,20 +105,15 @@ class UserCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  AnimatedTextKit(
-                    animatedTexts: [
-                      TyperAnimatedText(
-                        '€$teamValue triệu',
-                        textStyle: TextStyle(
-                          color: Colors.yellow.shade300,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Orbitron',
-                        ),
-                        speed: const Duration(milliseconds: 100),
-                      ),
-                    ],
-                    isRepeatingAnimation: false,
+                  CoinDisplay(
+                    balance: teamValue.toDouble(),
+                    textStyle: TextStyle(
+                      color: Colors.yellow.shade300,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Orbitron',
+                    ),
+                    iconSize: 16,
                   ),
                 ],
               ),
@@ -112,4 +123,4 @@ class UserCard extends StatelessWidget {
       ),
     );
   }
-} 
+}

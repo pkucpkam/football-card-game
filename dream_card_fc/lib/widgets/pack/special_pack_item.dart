@@ -1,3 +1,4 @@
+import 'package:dream_card_fc/widgets/common/coin_display.dart';
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
 
@@ -5,7 +6,7 @@ class SpecialPackItem extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String subtitle;
-  final String price;
+  final double price;
 
   const SpecialPackItem({
     super.key,
@@ -107,15 +108,16 @@ class SpecialPackItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      price,
-                      style: TextStyle(
+                    CoinDisplay(
+                      balance: price,
+                      textStyle: TextStyle(
                         color: Colors.yellow.shade300,
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontFamily: 'Orbitron',
                       ),
                     ),
+
                     Row(
                       children: [
                         ElevatedButton(

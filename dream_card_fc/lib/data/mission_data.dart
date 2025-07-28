@@ -1,10 +1,9 @@
-
 final List<Map<String, dynamic>> missions = [
   {
     'title': 'Thắng 3 trận liên tiếp',
     'description': 'Đánh bại 3 đối thủ trong chế độ thi đấu.',
     'reward': '1000 Xu',
-    'rewardImage': 'https://example.com/reward1.jpg',
+    'rewardIcon': 'assets/icons/soccer.png',
     'progress': '3/3',
     'isCompleted': true,
   },
@@ -12,7 +11,7 @@ final List<Map<String, dynamic>> missions = [
     'title': 'Mua 5 cầu thủ',
     'description': 'Mua 5 cầu thủ từ thị trường chuyển nhượng.',
     'reward': '1 Gói Vàng',
-    'rewardImage': 'https://example.com/reward2.jpg',
+    'rewardIcon': 'assets/icons/transfer.png',
     'progress': '4/5',
     'isCompleted': false,
   },
@@ -20,7 +19,7 @@ final List<Map<String, dynamic>> missions = [
     'title': 'Điểm danh 7 ngày',
     'description': 'Điểm danh liên tục trong 7 ngày.',
     'reward': '500 Xu',
-    'rewardImage': 'https://example.com/reward3.jpg',
+    'rewardIcon': 'assets/icons/calendar.png',
     'progress': '5/7',
     'isCompleted': false,
   },

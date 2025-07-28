@@ -24,7 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (!_isPasswordError) {
       await Future.delayed(const Duration(seconds: 1));
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/');
       }
     }
     setState(() {

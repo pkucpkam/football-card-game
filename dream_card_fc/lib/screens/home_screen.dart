@@ -1,7 +1,6 @@
-import 'package:dream_card_fc/widgets/common/bottom_nav_bar.dart';
+import 'package:dream_card_fc/widgets/common/coin_display.dart';
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,7 +10,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final int _currentIndex = 2;
   final String userName = 'Homie';
   final double balance = 500.0;
 
@@ -77,22 +75,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontFamily: 'Orbitron',
                               ),
                             ),
-                            Text(
-                              'Balance: ${balance.toStringAsFixed(2)} €',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 16,
-                                fontFamily: 'Roboto Condensed',
-                              ),
+                            Row(
+                              children: const [
+                                Text(
+                                  'Balance: ',
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 16,
+                                    fontFamily: 'Roboto Condensed',
+                                  ),
+                                ),
+                                CoinDisplay(balance: 1234.56),
+                              ],
                             ),
                           ],
                         ),
-                        ElevatedButton.icon(
+                        ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/profile');
+                            Navigator.pushReplacementNamed(context, '/test');
                           },
-                          icon: const Icon(Icons.account_circle, size: 24),
-                          label: const Text('Profile'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.deepPurple.shade800,
                             foregroundColor: Colors.cyanAccent,
@@ -101,7 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             shadowColor: Colors.cyanAccent.withOpacity(0.5),
                             elevation: 8,
+                            padding: const EdgeInsets.all(12),
                           ),
+                          child: const Icon(Icons.account_circle, size: 24),
                         ),
                       ],
                     ),
@@ -140,11 +143,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _buildStatColumn(Icons.people, 'Players', '100'),
+                        _buildStatColumn(
+                          Icons.people,
+                          'Players',
+                          const Text(
+                            '100',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                         _buildStatColumn(
                           Icons.monetization_on,
                           'Total Value',
-                          '100M €',
+                          const CoinDisplay(balance: 100),
                         ),
                       ],
                     ),
@@ -160,28 +174,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   childAspectRatio: 1.0,
                   children: [
                     _buildFeatureButton(
-                      icon: Icons.check_circle,
+                      assetIconPath: 'assets/icons/calendar.png',
                       label: 'Điểm danh',
                       onTap: () {
                         Navigator.pushReplacementNamed(context, '/checkin');
                       },
                     ),
                     _buildFeatureButton(
-                      icon: Icons.group,
+                      assetIconPath: 'assets/icons/pitch.png',
                       label: 'Đội hình',
                       onTap: () {
                         Navigator.pushReplacementNamed(context, '/pitch');
                       },
                     ),
                     _buildFeatureButton(
-                      icon: Icons.leaderboard,
-                      label: 'Bảng xếp hạng',
+                      assetIconPath: 'assets/icons/ranking.png',
+                      label: 'Xếp hạng',
                       onTap: () {
                         Navigator.pushReplacementNamed(context, '/ranking');
                       },
                     ),
                     _buildFeatureButton(
-                      icon: Icons.task,
+                      assetIconPath: 'assets/icons/missions.png',
                       label: 'Nhiệm vụ',
                       onTap: () {
                         Navigator.pushReplacementNamed(context, '/missions');
@@ -224,49 +238,24 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-        },
-      )
     );
   }
 
-  Widget _buildStatColumn(IconData icon, String label, String value) {
+  Widget _buildStatColumn(IconData icon, String label, Widget valueWidget) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, color: Colors.cyanAccent, size: 36),
-        const SizedBox(height: 8),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.white70,
-            fontFamily: 'Roboto Condensed',
-          ),
-        ),
-        AnimatedTextKit(
-          animatedTexts: [
-            TyperAnimatedText(
-              value,
-              textStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-                color: Colors.cyanAccent,
-                fontFamily: 'Orbitron',
-              ),
-              speed: const Duration(milliseconds: 50),
-            ),
-          ],
-          isRepeatingAnimation: false,
-        ),
+        Icon(icon, color: Colors.white),
+        const SizedBox(height: 4),
+        Text(label, style: const TextStyle(color: Colors.white70)),
+        const SizedBox(height: 2),
+        valueWidget,
       ],
     );
   }
 
   Widget _buildFeatureButton({
-    required IconData icon,
+    required String assetIconPath,
     required String label,
     required VoidCallback onTap,
   }) {
@@ -301,7 +290,12 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.cyanAccent, size: 40),
+            Image.asset(
+              assetIconPath,
+              width: 30,
+              height: 30,
+              fit: BoxFit.contain,
+            ),
             const SizedBox(height: 12),
             Text(
               label,

@@ -37,7 +37,7 @@ class _MissionsScreenState extends State<MissionsScreen> {
                       icon: const Icon(Icons.arrow_back, color: Colors.white),
                       onPressed:
                           () =>
-                              Navigator.pushReplacementNamed(context, '/home'),
+                              Navigator.pushReplacementNamed(context, '/'),
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -75,7 +75,7 @@ class _MissionsScreenState extends State<MissionsScreen> {
                           child: MissionCard(
                             title: mission['title'],
                             reward: mission['reward'],
-                            rewardImage: mission['rewardImage'],
+                            rewardIcon: mission['rewardIcon'],
                             isCompleted: mission['isCompleted'],
                             description: mission['description'],
                             progress: mission['progress'],
@@ -97,7 +97,7 @@ class _MissionsScreenState extends State<MissionsScreen> {
                                 title: mission['title'],
                                 description: mission['description'],
                                 reward: mission['reward'],
-                                rewardImage: mission['rewardImage'],
+                                rewardIcon: mission['rewardIcon'],
                                 progress: mission['progress'],
                               );
                             },

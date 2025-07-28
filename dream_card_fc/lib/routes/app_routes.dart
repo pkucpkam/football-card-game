@@ -1,8 +1,10 @@
 import 'package:dream_card_fc/screens/checkin_screen.dart';
+import 'package:dream_card_fc/screens/main_screen.dart';
 import 'package:dream_card_fc/screens/mission_screen.dart';
-import 'package:dream_card_fc/temp/packs_screen.dart';
+import 'package:dream_card_fc/screens/packs_screen.dart';
 import 'package:dream_card_fc/screens/pitch_screen.dart';
 import 'package:dream_card_fc/screens/ranking_screen.dart';
+import 'package:dream_card_fc/test/test_screen.dart';
 import 'package:flutter/material.dart';
 import '../screens/login_screen.dart';
 import '../screens/register_screen.dart';
@@ -14,6 +16,7 @@ import '../screens/notifications_screen.dart';
 
 class AppRoutes {
   static Map<String, WidgetBuilder> routes = {
+    '/': (context) => const MainScreen(),
     '/login': (context) => LoginScreen(),
     '/register': (context) => RegisterScreen(),
     '/home': (context) => HomeScreen(),
@@ -26,5 +29,7 @@ class AppRoutes {
     '/checkin': (context) => const CheckInScreen(),
     '/missions': (context) => const MissionsScreen(),
     '/pitch': (context) => const PitchScreen(),
+    // test screen
+    '/test': (context) => const TestScreen(),
   };
 }

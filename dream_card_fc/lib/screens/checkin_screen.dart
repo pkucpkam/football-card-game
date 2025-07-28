@@ -19,6 +19,7 @@ class _CheckInScreenState extends State<CheckInScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.black, Colors.deepPurple.shade900],
@@ -36,7 +37,7 @@ class _CheckInScreenState extends State<CheckInScreen>
                   children: [
                     IconButton(
                       icon: const Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => Navigator.pushNamed(context, '/'),
                     ),
                     const SizedBox(width: 4),
                     Text(

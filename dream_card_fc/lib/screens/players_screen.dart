@@ -119,48 +119,6 @@ class _PlayersScreenState extends State<PlayersScreen>
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(context, 3),
-    );
-  }
-
-  Widget _buildBottomNavigationBar(BuildContext context, int currentIndex) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      selectedItemColor: Colors.cyanAccent,
-      unselectedItemColor: Colors.grey.shade600,
-      backgroundColor: Colors.black.withOpacity(0.9),
-      elevation: 10,
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            Navigator.pushReplacementNamed(context, '/market');
-            break;
-          case 1:
-            Navigator.pushReplacementNamed(context, '/packs');
-            break;
-          case 2:
-            Navigator.pushReplacementNamed(context, '/home');
-            break;
-          case 3:
-            break;
-          case 4:
-            Navigator.pushReplacementNamed(context, '/profile');
-            break;
-        }
-      },
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Market'),
-        BottomNavigationBarItem(icon: Icon(Icons.inventory_2), label: 'Packs'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.sports_soccer),
-          label: 'Players',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle),
-          label: 'Profile',
-        ),
-      ],
     );
   }
 
@@ -180,14 +138,18 @@ class _PlayersScreenState extends State<PlayersScreen>
                   name: player['name'],
                   position: player['position'],
                   stats: player['stats'],
-                  value: player['value'],
+                  value: (player['value'] as num).toDouble(),
+                  overrall: player['overall'],
+                  level: player['level'],
+                  isInTeam: player['isInTeam'],
                   onDetailTap:
                       () => showPlayerDetails(
                         context,
                         player['name'],
                         player['position'],
                         player['stats'],
-                        player['value'],
+                        (player['value'] as num).toDouble(),
+                        player['imageUrl'],
                       ),
                   onSellTap:
                       () => ScaffoldMessenger.of(context).showSnackBar(

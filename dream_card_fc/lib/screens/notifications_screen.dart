@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import '../widgets/common/bottom_nav_bar.dart';
 import '../widgets/notification/notification_card.dart';
 import '../data/notifications_data.dart';
 
@@ -11,6 +9,7 @@ class NotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.deepPurple.shade100, Colors.white],
@@ -27,9 +26,9 @@ class NotificationsScreen extends StatelessWidget {
                 Text(
                   '🔔 Thông Báo',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Colors.deepPurple.shade900,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    color: Colors.deepPurple.shade900,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
@@ -44,7 +43,8 @@ class NotificationsScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: sampleNotifications.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: 16),
+                  separatorBuilder:
+                      (context, index) => const SizedBox(height: 16),
                   itemBuilder: (context, index) {
                     final notification = sampleNotifications[index];
                     return NotificationCard(
@@ -53,7 +53,11 @@ class NotificationsScreen extends StatelessWidget {
                       time: notification['time']!,
                       onTap: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Xem chi tiết: ${notification['title']}')),
+                          SnackBar(
+                            content: Text(
+                              'Xem chi tiết: ${notification['title']}',
+                            ),
+                          ),
                         );
                       },
                     );
@@ -64,7 +68,6 @@ class NotificationsScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(currentIndex: 4, onTap: (index) {}),
     );
   }
 }

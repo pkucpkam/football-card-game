@@ -413,7 +413,7 @@ class ProfileScreen extends StatelessWidget {
             Navigator.pushReplacementNamed(context, '/packs');
             break;
           case 2:
-            Navigator.pushReplacementNamed(context, '/home');
+            Navigator.pushReplacementNamed(context, '/');
             break;
           case 3:
             Navigator.pushReplacementNamed(context, '/players');

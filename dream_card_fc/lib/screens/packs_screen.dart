@@ -1,5 +1,4 @@
 import 'package:dream_card_fc/data/pack_data.dart';
-import 'package:dream_card_fc/widgets/common/bottom_nav_bar.dart';
 import 'package:dream_card_fc/widgets/pack/pack_item.dart';
 import 'package:dream_card_fc/widgets/pack/special_pack_item.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +52,7 @@ class PacksScreen extends StatelessWidget {
                             imageUrl: pack['imageUrl']!,
                             title: pack['title']!,
                             subtitle: pack['subtitle']!,
-                            price: pack['price']!,
+                            price: (pack['price'] as num).toDouble(),
                           )
                           as Widget;
                     },
@@ -90,7 +89,7 @@ class PacksScreen extends StatelessWidget {
                               imageUrl: pack['imageUrl']!,
                               title: pack['title']!,
                               subtitle: pack['subtitle']!,
-                              price: pack['price']!,
+                              price: (pack['price'] as num).toDouble(),
                             );
                           })
                           .toList()
@@ -101,7 +100,6 @@ class PacksScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(currentIndex: 1, onTap: (index) {}),
     );
   }
 }

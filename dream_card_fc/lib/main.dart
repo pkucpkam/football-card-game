@@ -1,4 +1,3 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:dream_card_fc/routes/app_routes.dart';
 
@@ -13,8 +12,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Dream Card FC',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.deepPurple, useMaterial3: true),
-      initialRoute: '/home', 
+      initialRoute: '/',
       routes: AppRoutes.routes,
       onUnknownRoute: (settings) {
         return MaterialPageRoute(

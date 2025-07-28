@@ -1,57 +1,36 @@
+// lib/widgets/common/curved_bottom_nav_bar.dart
+
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
-class BottomNavBar extends StatelessWidget {
+class CurvedBottomNavBar extends StatelessWidget {
   final int currentIndex;
+  final Function(int) onTap;
 
-  const BottomNavBar({
+  const CurvedBottomNavBar({
     super.key,
-    required this.currentIndex, required Null Function(dynamic index) onTap,
+    required this.currentIndex,
+    required this.onTap,
   });
-
-  void _handleNavigation(BuildContext context, int index) {
-    if (index == currentIndex) return; 
-
-    switch (index) {
-      case 0:
-        Navigator.pushReplacementNamed(context, '/market');
-        break;
-      case 1:
-        Navigator.pushReplacementNamed(context, '/packs');
-        break;
-      case 2:
-        Navigator.pushReplacementNamed(context, '/home');
-        break;
-      case 3:
-        Navigator.pushReplacementNamed(context, '/players');
-        break;
-      case 4:
-        Navigator.pushReplacementNamed(context, '/notifications');
-        break;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      selectedItemColor: Colors.deepPurple,
-      unselectedItemColor: Colors.grey,
-      backgroundColor: Colors.white.withOpacity(0.9),
-      elevation: 8,
-      onTap: (index) => _handleNavigation(context, index),
+    return CurvedNavigationBar(
+      index: currentIndex,
+      height: 60.0,
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Market'),
-        BottomNavigationBarItem(icon: Icon(Icons.inventory_2), label: 'Packs'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.sports_soccer),
-          label: 'Players',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.notifications),
-          label: 'Notifications',
-        ),
+        Icon(Icons.store, size: 30),
+        Icon(Icons.inventory_2, size: 30),
+        Icon(Icons.home, size: 30),
+        Icon(Icons.sports_soccer, size: 30),
+        Icon(Icons.notifications, size: 30),
       ],
+      color: Colors.white,
+      buttonBackgroundColor: const Color.fromARGB(255, 81, 162, 234),
+      backgroundColor: Colors.transparent,
+      animationCurve: Curves.easeInOut,
+      animationDuration: const Duration(milliseconds: 300),
+      onTap: onTap,
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
 import '../data/players_data.dart';
-import '../widgets/common/bottom_nav_bar.dart';
 import '../widgets/market/player_item.dart';
 
 class MarketScreen extends StatelessWidget {
@@ -10,7 +9,7 @@ class MarketScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       initialIndex: 0,
       child: Scaffold(
         body: Container(
@@ -44,6 +43,7 @@ class MarketScreen extends StatelessWidget {
                       _buildSearchTab(context),
                       _buildPlayerList(hotPlayers, false),
                       _buildPlayerList(yourPlayers, true),
+                      _buildTradeList(),
                     ],
                   ),
                 ),
@@ -51,7 +51,6 @@ class MarketScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: BottomNavBar(currentIndex: 0, onTap: (index) {}),
       ),
     );
   }
@@ -83,6 +82,7 @@ class MarketScreen extends StatelessWidget {
             Tab(text: 'Search'),
             Tab(text: 'Hot Player'),
             Tab(text: 'Your Player'),
+            Tab(text: 'Substitutes'),
           ],
         ),
       ),
@@ -144,8 +144,42 @@ class MarketScreen extends StatelessWidget {
                       name: p['name'],
                       position: p['position'],
                       stats: p['stats'],
-                      value: p['value'],
+                      value: (p['value'] as num?)?.toDouble() ?? 0.0,
                       isYourPlayer: isYourPlayer,
+                      onDetailTap: () {},
+                      onSellTap: () {},
+                      overrall: p['overrall'] ?? 'N/A',
+                      level: p['level'] ?? 'N/A',
+                      isInTeam: p['isInTeam'] ?? false,
+                    ),
+                  ),
+                )
+                .toList(),
+      ),
+    );
+  }
+
+  Widget _buildTradeList() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children:
+            tradingPlayers
+                .map(
+                  (p) => Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: PlayerItem(
+                      imageUrl: p['imageUrl'],
+                      name: p['name'],
+                      position: p['position'],
+                      stats: p['stats'],
+                      value: (p['value'] as num?)?.toDouble() ?? 0.0,
+                      isYourPlayer: false,
+                      onDetailTap: () {},
+                      onSellTap: () {},
+                      overrall: p['overrall'] ?? 'N/A',
+                      level: p['level'] ?? 'N/A',
+                      isInTeam: false,
                     ),
                   ),
                 )

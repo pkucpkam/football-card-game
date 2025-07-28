@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
 
@@ -23,10 +22,16 @@ class DayItem extends StatefulWidget {
 class _DayItemState extends State<DayItem> {
   double scale = 1.0;
 
+  final List<String> assetIcons = [
+    'assets/icons/coin.png',
+    'assets/icons/diamond.png',
+    'assets/icons/money-bag.png',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return GlassContainer(
-      height: 100,
+      height: double.infinity,
       gradient: LinearGradient(
         colors: [
           Colors.deepPurple.withOpacity(0.3),
@@ -40,7 +45,7 @@ class _DayItemState extends State<DayItem> {
         ],
       ),
       blur: 12,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(12),
       boxShadow: [
         BoxShadow(
           color: Colors.cyanAccent.withOpacity(0.3),
@@ -58,8 +63,7 @@ class _DayItemState extends State<DayItem> {
                 'Ngày ${widget.day}',
                 style: TextStyle(
                   color: Colors.cyanAccent,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
                   fontFamily: 'Orbitron',
                   shadows: [
                     Shadow(
@@ -70,38 +74,36 @@ class _DayItemState extends State<DayItem> {
                 ),
               ),
               const SizedBox(height: 8),
-              Image.network(
-                'https://example.com/reward${widget.day}.jpg',
-                width: 40,
-                height: 40,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  width: 40,
-                  height: 40,
-                  color: Colors.grey.shade800,
-                  child: const Icon(
-                    Icons.card_giftcard,
-                    color: Colors.cyanAccent,
-                    size: 30,
-                  ),
-                ),
+              Image.asset(
+                assetIcons[widget.day % assetIcons.length],
+                width: 20,
+                height: 20,
+                fit: BoxFit.contain,
+                errorBuilder:
+                    (context, error, stackTrace) => Container(
+                      width: 40,
+                      height: 40,
+                      color: Colors.grey.shade800,
+                      child: const Icon(
+                        Icons.card_giftcard,
+                        color: Colors.cyanAccent,
+                        size: 30,
+                      ),
+                    ),
               ),
             ],
           ),
           if (widget.isChecked)
-            Positioned(
-              top: 8,
-              right: 8,
-              child: AnimatedOpacity(
-                opacity: widget.isChecked ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 300),
-                child: const Icon(
-                  Icons.check_circle,
-                  color: Colors.green,
-                  size: 24,
-                ),
+            Container(
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              padding: const EdgeInsets.all(6),
+              child: Icon(
+                Icons.check_circle,
+                color: Colors.greenAccent.withOpacity(0.6),
+                size: 32,
               ),
             ),
+
           if (widget.isCurrentDay && !widget.isChecked)
             Positioned(
               bottom: 8,
@@ -146,4 +148,4 @@ class _DayItemState extends State<DayItem> {
       ),
     );
   }
-}  
+}

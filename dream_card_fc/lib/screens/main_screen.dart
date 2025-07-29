@@ -1,4 +1,3 @@
-// lib/screens/main_screen.dart
 
 import 'package:dream_card_fc/widgets/common/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';

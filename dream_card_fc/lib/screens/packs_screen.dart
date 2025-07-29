@@ -10,6 +10,7 @@ class PacksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.black, Colors.deepPurple.shade900],

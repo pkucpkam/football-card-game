@@ -1,4 +1,3 @@
-// 📁 lib/screens/leaderboard_screen.dart
 
 import 'package:flutter/material.dart';
 import '../widgets/leaderboard/user_card.dart';
@@ -67,7 +66,6 @@ class LeaderboardScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
 
-                    // Danh sách top
                     Column(
                       children:
                           leaderboardPlayers.asMap().entries.map((entry) {
@@ -90,7 +88,6 @@ class LeaderboardScreen extends StatelessWidget {
             ),
           ),
 
-          // 👇 Card bản thân đè lên cuối
           Positioned(
             bottom: 16,
             left: 20,

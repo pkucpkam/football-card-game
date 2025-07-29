@@ -1,7 +1,9 @@
+import 'package:dream_card_fc/widgets/market/market_player_item.dart';
+import 'package:dream_card_fc/widgets/market/player_item.dart';
+import 'package:dream_card_fc/widgets/player/player_detail_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
 import '../data/players_data.dart';
-import '../widgets/market/player_item.dart';
 
 class MarketScreen extends StatelessWidget {
   const MarketScreen({super.key});
@@ -9,7 +11,7 @@ class MarketScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       initialIndex: 0,
       child: Scaffold(
         body: Container(
@@ -41,8 +43,7 @@ class MarketScreen extends StatelessWidget {
                   child: TabBarView(
                     children: [
                       _buildSearchTab(context),
-                      _buildPlayerList(hotPlayers, false),
-                      _buildPlayerList(yourPlayers, true),
+                      _buildPlayerList(context, hotPlayers, false),
                       _buildTradeList(),
                     ],
                   ),
@@ -79,10 +80,9 @@ class MarketScreen extends StatelessWidget {
           unselectedLabelColor: Colors.white70,
           indicatorColor: Colors.cyanAccent,
           tabs: [
-            Tab(text: 'Search'),
-            Tab(text: 'Hot Player'),
-            Tab(text: 'Your Player'),
-            Tab(text: 'Substitutes'),
+            Tab(text: 'Tìm kiếm'),
+            Tab(text: 'Cầu thủ Hot'),
+            Tab(text: 'Giao dịch'),
           ],
         ),
       ),
@@ -91,43 +91,53 @@ class MarketScreen extends StatelessWidget {
 
   Widget _buildSearchTab(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          GlassContainer(
-            height: 50,
-            gradient: LinearGradient(
-              colors: [
-                Colors.deepPurple.withOpacity(0.3),
-                Colors.black.withOpacity(0.3),
-              ],
-            ),
-            borderGradient: LinearGradient(
-              colors: [
-                Colors.cyanAccent.withOpacity(0.8),
-                Colors.pinkAccent.withOpacity(0.8),
-              ],
-            ),
-            blur: 12,
-            borderRadius: BorderRadius.circular(12),
-            child: const TextField(
-              decoration: InputDecoration(
-                hintText: 'Tìm kiếm cầu thủ...',
-                hintStyle: TextStyle(color: Colors.white70),
-                prefixIcon: Icon(Icons.search, color: Colors.cyanAccent),
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(horizontal: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: GlassContainer(
+              height: 50,
+              gradient: LinearGradient(
+                colors: [
+                  Colors.deepPurple.withOpacity(0.3),
+                  Colors.black.withOpacity(0.3),
+                ],
+              ),
+              borderGradient: LinearGradient(
+                colors: [
+                  Colors.cyanAccent.withOpacity(0.8),
+                  Colors.pinkAccent.withOpacity(0.8),
+                ],
+              ),
+              blur: 12,
+              borderRadius: BorderRadius.circular(8),
+              child: const TextField(
+                style: TextStyle(color: Colors.white70),
+                decoration: InputDecoration(
+                  hintText: 'Tìm kiếm cầu thủ...',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(179, 255, 255, 255),
+                  ),
+                  prefixIcon: Icon(Icons.search, color: Colors.cyanAccent),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                ),
               ),
             ),
           ),
+
           const SizedBox(height: 16),
-          _buildPlayerList(searchPlayers, false),
+          _buildPlayerList(context, searchPlayers, false),
         ],
       ),
     );
   }
 
   Widget _buildPlayerList(
+    BuildContext context,
     List<Map<String, dynamic>> players,
     bool isYourPlayer,
   ) {
@@ -139,14 +149,22 @@ class MarketScreen extends StatelessWidget {
                 .map(
                   (p) => Padding(
                     padding: const EdgeInsets.only(bottom: 16),
-                    child: PlayerItem(
+                    child: MarketPlayerItem(
                       imageUrl: p['imageUrl'],
                       name: p['name'],
                       position: p['position'],
                       stats: p['stats'],
                       value: (p['value'] as num?)?.toDouble() ?? 0.0,
                       isYourPlayer: isYourPlayer,
-                      onDetailTap: () {},
+                      onDetailTap:
+                          () => showPlayerDetails(
+                            context,
+                            p['name'],
+                            p['position'],
+                            p['stats'],
+                            (p['value'] as num).toDouble(),
+                            p['imageUrl'],
+                          ),
                       onSellTap: () {},
                       overrall: p['overrall'] ?? 'N/A',
                       level: p['level'] ?? 'N/A',
@@ -164,7 +182,7 @@ class MarketScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children:
-            tradingPlayers
+            yourPlayers
                 .map(
                   (p) => Padding(
                     padding: const EdgeInsets.only(bottom: 16),
@@ -180,6 +198,7 @@ class MarketScreen extends StatelessWidget {
                       overrall: p['overrall'] ?? 'N/A',
                       level: p['level'] ?? 'N/A',
                       isInTeam: false,
+                      status: p['status'] ?? 'N/A',
                     ),
                   ),
                 )

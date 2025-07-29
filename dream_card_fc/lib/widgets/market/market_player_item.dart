@@ -1,8 +1,10 @@
 import 'package:dream_card_fc/widgets/common/coin_display.dart';
+import 'package:dream_card_fc/widgets/market/buy_player_dialog.dart';
+import 'package:dream_card_fc/widgets/market/player_price_trend_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
 
-class PlayerItem extends StatefulWidget {
+class MarketPlayerItem extends StatefulWidget {
   final String imageUrl;
   final String name;
   final String position;
@@ -13,10 +15,8 @@ class PlayerItem extends StatefulWidget {
   final String overrall;
   final String level;
   final bool isInTeam;
-  final bool isYourPlayer;
-  final String status; 
 
-  const PlayerItem({
+  const MarketPlayerItem({
     super.key,
     required this.imageUrl,
     required this.name,
@@ -28,15 +28,14 @@ class PlayerItem extends StatefulWidget {
     required this.overrall,
     required this.level,
     required this.isInTeam,
-    required this.isYourPlayer,
-    required this.status, 
+    required bool isYourPlayer,
   });
 
   @override
-  State<PlayerItem> createState() => _PlayerItemState();
+  State<MarketPlayerItem> createState() => _MarketPlayerItemState();
 }
 
-class _PlayerItemState extends State<PlayerItem> {
+class _MarketPlayerItemState extends State<MarketPlayerItem> {
   bool isExpanded = false;
 
   void toggleExpand() {
@@ -162,99 +161,72 @@ class _PlayerItemState extends State<PlayerItem> {
               ],
             ),
           ),
+
           if (isExpanded)
             Padding(
               padding: const EdgeInsets.only(top: 4, bottom: 12),
-              child: Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                alignment: WrapAlignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if (widget.status == 'pending')
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Đã hủy giao dịch ${widget.name}'),
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.cancel, size: 16),
-                      label: const Text('Hủy'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey.shade700,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        shadowColor: Colors.grey.withOpacity(0.5),
-                        elevation: 4,
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Roboto Condensed',
-                        ),
-                      ),
-                    ),
-                  if (widget.status == 'pending')
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Đã hủy giao dịch ${widget.name}'),
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.cancel, size: 16),
-                      label: const Text('Đăng ký lại'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                        foregroundColor: const Color.fromARGB(255, 0, 0, 0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        shadowColor: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
-                        elevation: 4,
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Roboto Condensed',
-                        ),
-                      ),
-                    ),
-                  if (widget.status == 'success')
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Đã nhận ${widget.name}')),
-                        );
-                      },
-                      icon: const Icon(Icons.check_circle, size: 16),
-                      label: const Text('Nhận'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.greenAccent.shade700,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        shadowColor: Colors.greenAccent.withOpacity(0.5),
-                        elevation: 4,
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Roboto Condensed',
-                        ),
-                      ),
-                    ),
+                  IconButton(
+                    onPressed: widget.onDetailTap,
+                    icon: const Icon(Icons.info_outline),
+                    tooltip: 'Chi tiết',
+                    color: Colors.cyanAccent,
+                  ),
+
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return PlayerPriceTrendDialog(
+                            playerName: widget.name,
+                            currentValue: widget.value,
+                          );
+                        },
+                      );
+                    },
+                    icon: const Icon(Icons.stacked_line_chart_outlined),
+                    tooltip: 'Xu hướng',
+                    color: Colors.cyanAccent,
+                  ),
+
+                  IconButton(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Đã yêu thích ${widget.name}')),
+                      );
+                    },
+                    icon: const Icon(Icons.star_outline),
+                    tooltip: 'Yêu thích',
+                    color: Colors.cyanAccent,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return BuyPlayerDialog(
+                            playerName: widget.name,
+                            currentValue: widget.value,
+                            onConfirm: (double price) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Đã đặt mua ${widget.name} với giá $price',
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                    icon: const Icon(Icons.add_shopping_cart_outlined),
+                    tooltip: 'Mua',
+                    color: Colors.cyanAccent,
+                  ),
                 ],
               ),
             ),

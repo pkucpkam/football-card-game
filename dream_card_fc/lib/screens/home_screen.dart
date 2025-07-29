@@ -95,16 +95,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.pushReplacementNamed(context, '/test');
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepPurple.shade800,
+                            backgroundColor: const Color.fromARGB(
+                              255,
+                              81,
+                              162,
+                              234,
+                            ),
                             foregroundColor: Colors.cyanAccent,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                             shadowColor: Colors.cyanAccent.withOpacity(0.5),
-                            elevation: 8,
+                            elevation: 4,
                             padding: const EdgeInsets.all(12),
+                            minimumSize: const Size(48, 52),
                           ),
-                          child: const Icon(Icons.account_circle, size: 24),
+                          child: const Icon(
+                            Icons.account_circle,
+                            size: 24,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -374,9 +384,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           InkWell(
-            onTap: () {
-              // TODO: Handle banner tap
-            },
+            onTap: () {},
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.all(12),

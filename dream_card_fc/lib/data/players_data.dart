@@ -9,6 +9,7 @@ final List<Map<String, dynamic>> searchPlayers = [
     'overrall': '95',
     'level': '5',
     'isInTeam': false,
+    'status': 'pending',
   },
   {
     'imageUrl':
@@ -19,6 +20,8 @@ final List<Map<String, dynamic>> searchPlayers = [
     'value': 150,
     'overrall': '94',
     'level': '5',
+    'isInTeam': false,
+    'status': 'success',
   },
 ];
 
@@ -32,6 +35,8 @@ final List<Map<String, dynamic>> hotPlayers = [
     'value': 120,
     'overrall': '94',
     'level': '5',
+    'isInTeam': false,
+    'status': 'success',
   },
   {
     'imageUrl':
@@ -42,6 +47,8 @@ final List<Map<String, dynamic>> hotPlayers = [
     'value': 180,
     'overrall': '94',
     'level': '5',
+    'isInTeam': false,
+    'status': 'pending',
   },
 ];
 
@@ -55,6 +62,8 @@ final List<Map<String, dynamic>> yourPlayers = [
     'value': 90,
     'overrall': '93',
     'level': '5',
+    'isInTeam': true,
+    'status': 'success',
   },
   {
     'imageUrl':
@@ -65,28 +74,7 @@ final List<Map<String, dynamic>> yourPlayers = [
     'value': 80,
     'overrall': '92',
     'level': '5',
-  },
-];
-
-final List<Map<String, dynamic>> tradingPlayers = [
-  {
-    'imageUrl': 'https://example.com/player1.png',
-    'name': 'Ronaldo',
-    'position': 'ST',
-    'stats': {'pace': 90, 'shooting': 93},
-    'value': 120.0,
-    'overrall': '93',
-    'level': 'Lv.5',
-    'isInTeam': false,
-  },
-  {
-    'imageUrl': 'https://example.com/player2.png',
-    'name': 'De Bruyne',
-    'position': 'CAM',
-    'stats': {'passing': 95, 'dribbling': 89},
-    'value': 110.0,
-    'overrall': '91',
-    'level': 'Lv.4',
-    'isInTeam': false,
+    'isInTeam': true,
+    'status': 'pending',
   },
 ];

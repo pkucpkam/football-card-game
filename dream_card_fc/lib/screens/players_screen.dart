@@ -1,4 +1,4 @@
-// 📁 lib/screens/players_screen.dart
+import 'package:dream_card_fc/widgets/player/sell_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
 import '../widgets/player/player_item.dart';
@@ -152,8 +152,24 @@ class _PlayersScreenState extends State<PlayersScreen>
                         player['imageUrl'],
                       ),
                   onSellTap:
-                      () => ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Bán ${player['name']}')),
+                      () => showDialog(
+                        context: context,
+                        builder:
+                            (context) => SellConfirmationDialog(
+                              playerName: player['name'],
+                              minValue: (player['value'] as num).toDouble(),
+                              onConfirm: (price, sellType) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      sellType == 'quick'
+                                          ? 'Đã bán nhanh ${player['name']} với giá $price'
+                                          : 'Đã đặt bán ${player['name']} với giá $price',
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                       ),
                 ),
               );

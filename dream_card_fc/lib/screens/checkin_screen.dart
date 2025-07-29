@@ -1,4 +1,3 @@
-// 📁 lib/screens/checkin_screen.dart
 
 import 'package:flutter/material.dart';
 import '../widgets/checkin/day_item.dart';

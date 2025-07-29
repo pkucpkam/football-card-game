@@ -39,6 +39,7 @@ dependencies:
   glass_kit: ^4.0.1
   animated_text_kit: ^4.2.3
   curved_navigation_bar: ^1.0.6
+  fl_chart: ^1.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,3 @@
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +21,7 @@ class CurvedBottomNavBar extends StatelessWidget {
         Icon(Icons.inventory_2, size: 30),
         Icon(Icons.home, size: 30),
         Icon(Icons.sports_soccer, size: 30),
-        Icon(Icons.notifications, size: 30),
+        Icon(Icons.shopify, size: 30),
       ],
       color: Colors.white,
       buttonBackgroundColor: const Color.fromARGB(255, 81, 162, 234),

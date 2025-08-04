@@ -1,11 +1,10 @@
-
 import 'package:dream_card_fc/widgets/common/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'market_screen.dart';
 import 'players_screen.dart';
 import 'packs_screen.dart';
-import 'notifications_screen.dart';
+import 'items_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -22,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     PacksScreen(),
     HomeScreen(),
     PlayersScreen(),
-    NotificationsScreen(),
+    ItemsScreen(),
   ];
 
   @override

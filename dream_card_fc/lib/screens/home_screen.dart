@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/test');
+                            Navigator.pushReplacementNamed(context, '/upgrade');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromARGB(

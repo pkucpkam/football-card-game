@@ -1,3 +1,4 @@
+import 'package:dream_card_fc/screens/open/pack_open_screen.dart';
 import 'package:dream_card_fc/widgets/common/coin_display.dart';
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
@@ -122,9 +123,17 @@ class PackItem extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        ScaffoldMessenger.of(
+                        Navigator.push(
                           context,
-                        ).showSnackBar(SnackBar(content: Text('Mở $title')));
+                          MaterialPageRoute(
+                            builder:
+                                (_) => PackOpenScreen(
+                                  imageUrl: imageUrl,
+                                  title: title,
+                                  subtitle: subtitle,
+                                ),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepPurple.shade800,
